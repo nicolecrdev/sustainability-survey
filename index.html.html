@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Sustainability Campaign Emotional Resonance Survey</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root {
+    --color-primary: #2c8c99;
+    --color-primary-hover: #247a85;
+    --color-bg: #fcfcf9;
+    --color-surface: #ffffff;
+    --color-text: #1f2121;
+    --color-text-secondary: #626c71;
+    --color-border: rgba(94, 82, 64, 0.2);
+    --color-accent: #32b8c6;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .campaign-image {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: white;
+  }
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 1.5em 0 0.75em 0;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+  .welcome-title {
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+    text-align: center;
+  }
+  .welcome-desc {
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-bottom: 2em;
+    font-size: 1.05rem;
+  }
+  .campaign-desc {
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+  .emotion-label {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    display: block;
+  }
+  button,
+  select,
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1.5px solid var(--color-border);
+    margin-top: 8px;
+    background: var(--color-surface);
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  input[type="text"],
+  input[type="email"] {
+    cursor: text;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+  button {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 2px 8px rgba(44, 140, 153, 0.2);
+  }
+  button:hover {
+    background: var(--color-primary-hover);
+    box-shadow: 0 4px 12px rgba(44, 140, 153, 0.3);
+    transform: translateY(-1px);
+  }
+  button:active {
+    transform: translateY(0);
+  }
+  button.secondary {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1.5px solid var(--color-border);
+    box-shadow: none;
+  }
+  button.secondary:hover {
+    background: #f5f5f5;
+    box-shadow: none;
+    transform: none;
+  }
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23626C71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+  }
+  select:hover,
+  select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-top: 8px;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--color-border);
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+  }
+  textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+  .nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .progress {
+    margin: 0 0 24px 0;
+    padding: 12px 16px;
+    background: var(--color-accent);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .thank-you-box {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: white;
+    padding: 32px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .thank-you-box h2 {
+    color: white;
+    margin: 0 0 12px 0;
+  }
+  .scale-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: 10px;
+  }
+  .scale-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    gap: 8px;
+  }
+  .scale-option {
+    flex: 1;
+    text-align: center;
+  }
+  .scale-option input[type="radio"] {
+    display: block;
+    margin: 0 auto 6px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+  .scale-option label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .likert-matrix {
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+  .matrix-header {
+    background: var(--color-primary);
+    color: white;
+    padding: 12px;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1.5px solid var(--color-border);
+    border-top: none;
+    background: var(--color-surface);
+  }
+  .matrix-table thead th {
+    background: #f5f5f5;
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .matrix-table thead th:first-child {
+    text-align: left;
+    min-width: 120px;
+  }
+  .matrix-table tbody tr {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .matrix-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  .matrix-table tbody tr:hover {
+    background: rgba(44, 140, 153, 0.05);
+  }
+  .emotion-row {
+    padding: 12px;
+    font-weight: 500;
+    text-align: left;
+    min-width: 120px;
+  }
+  .matrix-table tbody td {
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .matrix-table input[type="radio"] {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+  .loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (max-width: 600px) {
+    .container {
+      padding: 20px 16px;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    .welcome-title {
+      font-size: 1.75rem;
+    }
+    button,
+    select {
+      font-size: 0.95rem;
+      padding: 12px 14px;
+    }
+    .emotion-row {
+      min-width: 100px;
+      font-size: 0.9rem;
+    }
+    .matrix-table input[type="radio"] {
+      width: 18px;
+      height: 18px;
+    }
+    .matrix-table thead th {
+      font-size: 0.8rem;
+      padding: 10px 4px;
+    }
+    .scale-options {
+      flex-wrap: wrap;
+    }
+    .scale-option {
+      min-width: 60px;
+    }
+    .scale-option label {
+      font-size: 0.75rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container" id="survey-container"></div>
+  <script>
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwkTTF2ePI5f9B2JYSx3XuIy4I9frPZhZZ0DlSb9sPHBwuBEsd66eqv5Mr5l0SVMpv_/exec';
+
+    // Survey Data (fixed order)
+    const campaigns = [
+      {
+        title: "Patagonia "Don't Buy This Jacket"",
+        image: "https://pplx-res.cloudinary.com/image/upload/v1763931170/search_images/59c733c3a975cb6140efa88140b42be83778177b.jpg",
+        brand: "Patagonia",
+        tagline: "Don't Buy This Jacket",
+        message: "Anti-consumerism",
+        intent: "Encourages buying less and choosing quality over quantity to reduce environmental impact."
+      },
+      {
+        title: "WWF "Last Selfie"",
+        image: "https://pplx-res.cloudinary.com/image/upload/v1764024594/search_images/5328d513ba3bc56dc8ee135185dde677a4d6eab9.jpg",
+        brand: "World Wildlife Fund (WWF)",
+        tagline: "Last Selfie",
+        message: "Species extinction awareness",
+        intent: "Uses guilt and urgency to show endangered animals taking their 'last selfie' before extinction, linking consumer behavior to wildlife conservation."
+      },
+      {
+        title: "Reformation "Carbon is Canceled"",
+        image: "https://pplx-res.cloudinary.com/image/upload/v1764024594/search_images/5328d513ba3bc56dc8ee135185dde677a4d6eab9.jpg",
+        brand: "Reformation",
+        tagline: "Carbon is Canceled",
+        message: "Climate action",
+        intent: "Empowers consumers to fight climate change through sustainable fashion choices."
+      },
+      {
+        title: "Levi's "Buy Better, Wear Longer"",
+        image: "https://pplx-res.cloudinary.com/image/upload/v1764024595/search_images/6ac10ff2c8c9cc449ebe1325bb1e4fb617579c4d.jpg",
+        brand: "Levi's",
+        tagline: "Buy Better, Wear Longer",
+        message: "Durability & longevity",
+        intent: "Promotes investing in quality clothing that lasts, reducing waste from fast fashion."
+      },
+      {
+        title: "Adidas "Run for the Oceans"",
+        image: "https://pplx-res.cloudinary.com/image/upload/v1764022339/search_images/f07652486d816c01a8a51558a5bd66d0ea819a49.jpg",
+        brand: "Adidas x Parley",
+        tagline: "Run for the Oceans",
+        message: "Ocean conservation",
+        intent: "Mobilizes community action to protect oceans through products made from recycled ocean plastic."
+      }
+    ];
+
+    // Emotions fixed order
+    const emotions = ["Inspired", "Guilty", "Empowered", "Confused", "Hopeful", "Skeptical"];
+
+    let answers = { demographics: {}, campaigns: [], recall: {}, extra: "" };
+    let current = 0;
+
+    function showDemographics() {
+      document.getElementById('survey-container').innerHTML = `
+    <h2 class="welcome-title">Welcome to the Survey</h2>
+    <div class="welcome-desc">Thank you for participating! We're testing how different retail sustainability campaigns make people feel.<br /><br />
+      You'll see 5 campaigns and rate your emotional responses. This takes about 5-7 minutes.<br /><br />
+      Please provide your information below.
+    </div>
+    <label class="emotion-label">Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+    <label class="emotion-label">Email Address</label>
+    <input type="email" id="email" placeholder="Enter your email">
+    <label class="emotion-label">Age Range</label>
+    <select id="age">
+      <option value="" disabled selected>Select...</option>
+      <option>18-25</option>
+      <option>26-35</option>
+      <option>36-45</option>
+      <option>46-55</option>
+      <option>56+</option>
+    </select>
+    <label class="emotion-label">How would you rate your current sustainable consumption habits?</label>
+    <div class="scale-container">
+      <div class="scale-options">
+        <div class="scale-option">
+          <input type="radio" name="green" value="1" id="green1">
+          <label for="green1">1<br>I rarely consider sustainability</label>
+        </div>
+        <div class="scale-option">
+          <input type="radio" name="green" value="2" id="green2">
+          <label for="green2">2</label>
+        </div>
+        <div class="scale-option">
+          <input type="radio" name="green" value="3" id="green3">
+          <label for="green3">3</label>
+        </div>
+        <div class="scale-option">
+          <input type="radio" name="green" value="4" id="green4">
+          <label for="green4">4</label>
+        </div>
+        <div class="scale-option">
+          <input type="radio" name="green" value="5" id="green5">
+          <label for="green5">5<br>Sustainability guides most purchases</label>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button onclick="saveDemo()">Start Survey</button>
+    </div>
+  `;
+    }
+
+    function saveDemo() {
+      let name = document.getElementById('name').value.trim();
+      let email = document.getElementById('email').value.trim();
+      let age = document.getElementById('age').value;
+      let green = document.querySelector('input[name="green"]:checked');
+      if (!name) {
+        alert('Please enter your full name.');
+        return;
+      }
+      if (!email) {
+        alert('Please enter your email address.');
+        return;
+      }
+      if (!age) {
+        alert('Please select your age range.');
+        return;
+      }
+      if (!green) {
+        alert('Please rate your sustainable consumption habits.');
+        return;
+      }
+      answers.demographics = { name, email, age, green: green.value };
+      current = 0;
+      showCampaign();
+    }
+
+    function showCampaign() {
+      const camp = campaigns[current];
+      let emosHTML = emotions.map(e => `
+    <tr>
+      <td class="emotion-row">${e}</td>
+      <td><input type="radio" name="emo_${e}" value="1"></td>
+      <td><input type="radio" name="emo_${e}" value="2"></td>
+      <td><input type="radio" name="emo_${e}" value="3"></td>
+      <td><input type="radio" name="emo_${e}" value="4"></td>
+      <td><input type="radio" name="emo_${e}" value="5"></td>
+    </tr>
+  `).join('');
+      document.getElementById('survey-container').innerHTML = `
+    <div class="progress">Campaign ${current+1} of ${campaigns.length}</div>
+    <h2>${camp.title}</h2>
+    <img src="${camp.image}" class="campaign-image" alt="Campaign: ${camp.title}">
+    <div class="campaign-desc"><strong>Brand:</strong> ${camp.brand}<br>
+    <strong>Tagline:</strong> <strong>"${camp.tagline}"</strong><br>
+    <strong>Message:</strong> ${camp.message}<br>
+    <strong>Intent:</strong> ${camp.intent}</div>
+    <form id="campform">
+      <div class="matrix-header">Rate how much you feel each emotion after the ad</div>
+      <div class="likert-matrix">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Emotion</th>
+              <th>1<br><small>Not at all</small></th>
+              <th>2</th>
+              <th>3<br><small>Neutral</small></th>
+              <th>4</th>
+              <th>5<br><small>Very much</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${emosHTML}
+          </tbody>
+        </table>
+      </div>
+      <label class="emotion-label" style="margin-top: 28px;">What, if any, other feelings did this ad create for you? If none, just type in N/A.</label>
+      <textarea id="open" placeholder="Share your thoughts or type N/A..."></textarea>
+      <div class="nav">
+        ${current > 0 ? '<button type="button" class="secondary" onclick="goBack()">Back</button>' : ''}
+        <button onclick="saveCampaign(); return false;">Next Campaign</button>
+      </div>
+    </form>
+  `;
+    }
+
+    function goBack() {
+      if (current > 0) {
+        current--;
+        answers.campaigns.pop();
+        showCampaign();
+      } else {
+        showDemographics();
+      }
+    }
+
+    function saveCampaign() {
+      let emosObj = {};
+      let ok = true;
+      emotions.forEach(e => {
+        let checked = document.querySelector(`input[name="emo_${e}"]:checked`);
+        if (!checked) ok = false;
+        emosObj[e] = checked ? checked.value : '';
+      });
+      let open = document.getElementById('open').value.trim();
+      if (!ok) {
+        alert('Please rate all emotions for this campaign.');
+        return;
+      }
+      answers.campaigns.push({ campaign: campaigns[current].title, emotions: emosObj, open });
+      current++;
+      if (current < campaigns.length) showCampaign();
+      else showRecall();
+    }
+
+    function showRecall() {
+      let opts = campaigns.map((c,i) => `<option value="${i}">${c.title}</option>`).join('');
+      document.getElementById('survey-container').innerHTML = `
+    <h2>Almost done!</h2>
+    <div class="campaign-desc">Just two final questions about the campaigns you saw.</div>
+    <label class="emotion-label">Which campaign did you remember the best?</label>
+    <select id="recall1">
+      <option value="" disabled selected>Select...</option>
+      ${opts}
+    </select>
+    <label class="emotion-label">Which campaign resonated with you most emotionally?</label>
+    <select id="recall2">
+      <option value="" disabled selected>Select...</option>
+      ${opts}
+    </select>
+    <label class="emotion-label">Any other feedback or comments?</label>
+    <textarea id="extra" placeholder="Optional - share any additional thoughts..."></textarea>
+    <div class="nav">
+      <button class="secondary" onclick="goBackFromRecall()">Back</button>
+      <button onclick="saveRecall()">Submit Survey</button>
+    </div>
+  `;
+    }
+
+    function goBackFromRecall() {
+      current = campaigns.length - 1;
+      showCampaign();
+    }
+
+    function saveRecall() {
+      let r1 = document.getElementById('recall1').value;
+      let r2 = document.getElementById('recall2').value;
+      if (r1 == '' || r2 == '') {
+        alert('Please answer both recall/resonance questions.');
+        return;
+      }
+      answers.recall = { best: campaigns[r1].title, resonate: campaigns[r2].title };
+      answers.extra = document.getElementById('extra').value.trim();
+      submitToGoogleSheets();
+    }
+
+    async function submitToGoogleSheets() {
+      document.getElementById('survey-container').innerHTML = `
+    <div style="text-align: center; padding: 60px 20px;">
+      <div class="loading"></div>
+      <h2 style="margin-top: 20px;">Submitting your responses...</h2>
+      <p style="color: var(--color-text-secondary);">Please wait while we save your data.</p>
+    </div>
+  `;
+      try {
+        const data = {
+          timestamp: new Date().toISOString(),
+          name: answers.demographics.name,
+          email: answers.demographics.email,
+          age: answers.demographics.age,
+          sustainableHabits: answers.demographics.green,
+          campaigns: answers.campaigns,
+          bestRecalled: answers.recall.best,
+          mostResonant: answers.recall.resonate,
+          additionalFeedback: answers.extra,
+        };
+
+        const response = await fetch(GOOGLE_SHEETS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        showThankYou();
+      } catch (error) {
+        console.error('Error submitting:', error);
+        alert('There was an error submitting your response. Please contact the survey administrator.');
+        showRecall();
+      }
+    }
+
+    function showThankYou() {
+      document.getElementById('survey-container').innerHTML = `
+    <div class="thank-you-box">
+      <h2>Thank You!</h2>
+      <div>Your responses have been submitted successfully. We appreciate your time and insights into how sustainability campaigns affect consumer emotions and behavior.</div>
+    </div>
+    <div style="margin-top: 24px; color: var(--color-text-secondary); text-align: center;">
+      You may now close this window.
+    </div>
+  `;
+    }
+
+    showDemographics();
+  </script>
+</body>
+</html>
